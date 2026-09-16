@@ -15,7 +15,7 @@
 <div class="save-panel"><p id="draft" class="hint" role="status">尚未修改设置</p><button id="save" type="submit" disabled>保存设置</button><p class="hint">保存后需完整重启手机才能生效，不会自动重启。</p></div>
 </form>
 <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
-<details class="help"><summary>使用须知与恢复方法</summary><div class="details-body"><p>默认覆盖全部可注入应用。禁止注入的应用不会被强制注入；并非每个应用或输出路径都已验证。</p><p>已验证普通扬声器 PCM 播放。蓝牙、USB、硬件卸载解码和直通输出等路径可能不生效。</p><p>保存设置后请重启。禁用或卸载本模块后也请重启，原厂文件会自然恢复。</p><p>仅适配已审计的 Myron 固件及 Zygisk Next 版本。系统或相关组件更新后需要重新核对适配。</p><p>场景名称表示配置选择，不表示已经测得实际 Dolby 编号；原厂分段调音保持不变。</p></div></details>
+<details class="help"><summary>使用须知与恢复方法</summary><div class="details-body"><p>默认覆盖全部可注入应用。禁止注入的应用不会被强制注入；并非每个应用或输出路径都已验证。</p><p>已验证普通扬声器 PCM 播放。蓝牙、USB、硬件卸载解码和直通输出等路径可能不生效。</p><p>保存设置后请重启。禁用或卸载本模块后也请重启，原厂文件会自然恢复。</p><p>仅适配设备代号 myron，并核对原厂音频文件。系统更新后应按仓库说明重新测试；文件不兼容时模块会拒绝加载。</p><p>场景名称表示配置选择，不表示已经测得实际 Dolby 编号；原厂分段调音保持不变。</p></div></details>
 <details id="diagnostics"><summary>高级诊断</summary><div class="details-body"><p class="hint">供排查问题使用。文件视图、读取替换日志和实际播放验证是不同证据。</p><button id="refresh" type="button" class="secondary">刷新状态</button><p class="hint">刷新只更新状态，不会覆盖你未保存的修改。</p><pre id="evidence">等待读取…</pre></div></details>
-<footer>Myron 音频控制 · <span>0.2.0</span></footer>
+<footer>Myron 音频控制 · <span>0.2.1</span></footer>
 </main><script type="module" src="app.js"></script></body></html>

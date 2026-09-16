@@ -33,7 +33,7 @@ static void writeFile(const std::string& p,const std::string& s) {
 }
 static std::string prop(const char* name){char b[PROP_VALUE_MAX]{};__system_property_get(name,b);return b;}
 static void verifyBase(bool targets) {
-    if(prop("ro.product.device")!="myron" || prop("ro.build.fingerprint")!=FINGERPRINT) throw std::runtime_error("unsupported device/firmware; re-audit required");
+    if(prop("ro.product.device")!="myron") throw std::runtime_error("unsupported device; myron required");
     if(digest(readFile(root+"/baseline/audio_lowpower_app_list.xml"))!=LOW_STOCK_HASH || digest(readFile(root+"/baseline/audio_effects_config.json"))!=EFFECT_STOCK_HASH) throw std::runtime_error("bundled baseline hash mismatch");
     for(auto id:{"myron_dolby_bili_profile_test","myron_bili_volume_unity","audiolowpowerbypass"}){
         std::string p=std::string("/data/adb/modules/")+id;

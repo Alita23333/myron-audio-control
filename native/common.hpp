@@ -22,4 +22,3 @@ inline const char* LOW_PATH="/odm/etc/audio/audio_lowpower_app_list.xml";
 inline const char* EFFECT_PATH="/odm/etc/audio/audio_effects_config.json";
 inline const char* LOW_STOCK_HASH="352c981839b5619b5b61b28c6ca1bf8ca59fe8972c67510757f218b5cc7b706d";
 inline const char* EFFECT_STOCK_HASH="cd873f82c5d5f8f339bb2455c63c7c37e64fbb24959b912f4f5c28ad06c8b25b";
-inline const char* FINGERPRINT="Redmi/myron/myron:17/CP2A.260605.016/OS4.0.0.25.XPMCNXM:user/release-keys";

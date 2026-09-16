@@ -1,6 +1,6 @@
 #!/system/bin/sh
 SKIPUNZIP=0
-ui_print "- Myron Audio Control: audited myron firmware only"
+ui_print "- Myron Audio Control: myron device and compatible audio baseline only"
 ui_print "- Existing audio test modules must be disabled"
 if [ ! -d /data/adb/modules/zygisksu ] || [ -f /data/adb/modules/zygisksu/disable ] || [ -f /data/adb/modules/zygisksu/remove ]; then
     abort "The audited Zygisk Next installation must be enabled"
