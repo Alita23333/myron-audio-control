@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'"><title>Myron 音频控制</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<header><span class="eyebrow">MYRON AUDIO CONTROL</span><h1>让音量与音效<br>各随你意</h1><p>解除应用的名单音量衰减，选择你喜欢的音效。</p></header>
+<section class="status-card" aria-labelledby="statusTitle"><div class="section-heading"><h2 id="statusTitle">当前状态</h2><span id="badge" class="badge">读取中</span></div><p id="status" role="status" aria-live="polite">正在读取手机上的配置…</p><div id="activeSummary" class="summary"></div><p id="scope" class="hint"></p></section>
+<form id="settings">
+<section><div class="section-heading"><h2>音量</h2><span class="tag">独立开关</span></div><label class="toggle"><span><strong>解除应用音量衰减</strong><small>让名单中的应用不再被额外调低音量。</small></span><span class="switch"><input type="checkbox" id="unity" checked><span class="switch-track" aria-hidden="true"></span></span></label><p class="note">不是强制最大音量。系统音量、应用自身音量和扬声器保护保持不变。</p></section>
+<section><h2>音效</h2><p class="section-intro">音量开关不改变音效，这里可以单独选择。</p><fieldset id="modes" class="mode-list"><legend class="sr-only">选择音效模式</legend>
+<label class="mode-card"><input type="radio" name="mode" value="stock" checked><span class="radio-mark" aria-hidden="true"></span><span><strong>保留原厂音效 <em>推荐</em></strong><small>保留手机为不同应用设置的声音风格。</small></span></label>
+<label class="mode-card"><input type="radio" name="mode" value="default"><span class="radio-mark" aria-hidden="true"></span><span><strong>统一默认音效</strong><small>不再按应用名单分配场景，使用默认音效。</small></span></label>
+<label class="mode-card"><input type="radio" name="mode" value="per-app"><span class="radio-mark" aria-hidden="true"></span><span><strong>为应用单独设置</strong><small>以原厂设置为基础，只调整你指定的应用。</small></span></label>
+</fieldset>
+<div id="perApp" hidden><div class="editor-heading"><h3>应用规则</h3><span id="ruleCount" class="hint">0 个应用</span></div><p class="hint">填写应用包名，而不是显示名称。未添加的应用沿用原厂设置。</p><div id="rows"></div><button id="add" type="button" class="secondary full">＋ 添加应用规则</button><p class="hint">切换到其他模式时，规则会保留，但不会应用。</p></div></section>
+<div class="save-panel"><p id="draft" class="hint" role="status">尚未修改设置</p><button id="save" type="submit" disabled>保存设置</button><p class="hint">保存后需完整重启手机才能生效，不会自动重启。</p></div>
+</form>
+<div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+<details class="help"><summary>使用须知与恢复方法</summary><div class="details-body"><p>默认覆盖全部可注入应用。禁止注入的应用不会被强制注入；并非每个应用或输出路径都已验证。</p><p>已验证普通扬声器 PCM 播放。蓝牙、USB、硬件卸载解码和直通输出等路径可能不生效。</p><p>保存设置后请重启。禁用或卸载本模块后也请重启，原厂文件会自然恢复。</p><p>仅适配已审计的 Myron 固件及 Zygisk Next 版本。系统或相关组件更新后需要重新核对适配。</p><p>场景名称表示配置选择，不表示已经测得实际 Dolby 编号；原厂分段调音保持不变。</p></div></details>
+<details id="diagnostics"><summary>高级诊断</summary><div class="details-body"><p class="hint">供排查问题使用。文件视图、读取替换日志和实际播放验证是不同证据。</p><button id="refresh" type="button" class="secondary">刷新状态</button><p class="hint">刷新只更新状态，不会覆盖你未保存的修改。</p><pre id="evidence">等待读取…</pre></div></details>
+<footer>Myron 音频控制 · <span>0.2.0</span></footer>
+</main><script type="module" src="app.js"></script></body></html>

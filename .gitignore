@@ -1,0 +1,14 @@
+/build/
+/dist/
+/module-source/bin/
+/module-source/zygisk/
+/module-source/runtime/
+*.log
+*.apk
+*.p12
+*.jks
+*.keystore
+*.pem
+*.key
+.env
+.env.*

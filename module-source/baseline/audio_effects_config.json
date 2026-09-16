@@ -1,0 +1,87 @@
+{
+    "scenario_volume_flag": {
+        "dolby_multilevel_volume": true,
+        "mi_multilevel_volume": true,
+        "dolby_multiscenario": true,
+        "mi_multiscenario": false
+    },
+    "volume_levels": [
+        { "range": [0, 70], "device_id": "small_mode_speaker" },
+        { "range": [71, 120], "device_id": "medium_mode_speaker" },
+        { "range": [121, 150], "device_id": "large_mode_speaker" }
+    ],
+    "app_profiles": {
+        "long_video": {
+            "dolby_profile": 4,
+            "packages": [
+                "com.tencent.qqlive",
+                "com.youku.phone",
+                "tv.danmaku.bili",
+                "com.qiyi.video",
+                "com.hunantv.imgo.activity",
+                "com.qiyi.video.lite",
+                "com.cmcc.cmvideo",
+                "com.google.android.youtube",
+                "com.cctv.yangshipin.app.androidp",
+                "com.babycloud.hanju",
+                "com.bilibili.app.in",
+                "com.le123.ysdq",
+                "com.example.pptv",
+                "com.wondertek.miguaikan",
+                "com.inphase.itv",
+                "com.xyhj.hanju"
+            ]
+        },
+        "short_video": {
+            "dolby_profile": 5,
+            "packages": [
+                "com.ss.android.ugc.aweme",
+                "com.ss.android.ugc.aweme.lite",
+                "com.smile.gifmaker",
+                "com.kuaishou.nebula",
+                "com.phoenix.read",
+                "com.ss.android.article.video",
+                "com.ss.android.ugc.live",
+                "com.dz.hmjc",
+                "com.duowan.kiwi",
+                "com.ss.android.yumme.video",
+                "com.baidu.haokan",
+                "com.sup.android.superb",
+                "com.sohu.sohuvideo",
+                "air.tv.douyu.android",
+                "com.kwai.theater",
+                "com.tencent.weishi",
+                "com.yiyou.ga",
+                "com.duowan.mobile",
+                "com.wwwscn.yuexingbao",
+                "com.zhiliaoapp.musically",
+                "com.fiveplay",
+                "com.zhangyue.app.shortvideo",
+                "com.ss.android.ugc.aweme.hubble",
+                "com.secret.prettyhezi",
+                "com.ss.android.ugc.trill",
+                "com.baidu.video",
+                "com.jz.xydj",
+                "com.tencent.mm",
+                "com.tencent.mobileqq",
+                "com.xingin.xhs",
+                "com.sina.weibo",
+                "com.zhihu.android",
+                "com.taobao.taobao",
+                "com.dragon.read",
+                "com.xs.fm",
+                "com.kmxs.reader",
+                "com.ximalaya.ting.android",
+                "com.qidian.QDReader"
+              ]
+        },
+        "navigation": {
+            "dolby_profile": 6,
+            "packages": [
+                "com.autonavi.minimap",
+                "com.baidu.BaiduMap",
+                "com.tencent.map"
+            ]
+        }
+    }
+}

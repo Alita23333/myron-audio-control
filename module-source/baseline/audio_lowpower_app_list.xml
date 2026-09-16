@@ -1,0 +1,71 @@
+<packages>
+    <config>
+        <template type="lowPowerShortVideo" volume="0.447" power_save="0.447"/>
+        <template type="lowPowerLongVideo" volume="1.0" power_save="1.0"/>
+        <template type="lowPowerGame" volume="0.631" power_save="0.631"/>
+        <template type="lowPowerSva" volume="0.531" power_save="0.398"/>
+    </config>
+
+    <group type="lowPowerShortVideo">
+        <package name="com.ss.android.ugc.aweme"/>
+        <package name="com.xingin.xhs"/>
+        <package name="com.smile.gifmaker"/>
+        <package name="com.kuaishou.nebula"/>
+        <package name="com.taobao.taobao"/>
+        <package name="com.xunmeng.pinduoduo"/>
+        <package name="com.jingdong.app.mall"/>
+        <package name="com.xiaomi.shop"/>
+        <package name="com.sankuai.meituan"/>
+        <package name="com.taobao.idlefish"/>
+        <package name="com.achievo.vipshop"/>
+        <package name="com.alibaba.wireless"/>
+        <package name="com.tmall.wireless"/>
+        <package name="com.taobao.live"/>
+        <package name="com.sankuai.meituan.takeoutnew"/>
+        <package name="com.android.browser"/>
+        <package name="com.tencent.mtt"/>
+        <package name="com.UCMobile"/>
+        <package name="com.sina.weibo"/>
+        <package name="com.weico.international"/>
+        <package name="com.ss.android.article.news"/>
+        <package name="com.zhihu.android"/>
+        <package name="com.xs.fm"/>
+        <package name="com.ss.android.auto"/>
+        <package name="com.coolapk.market"/>
+        <package name="cn.xuexi.android"/>
+        <package name="com.tencent.qt.qtl"/>
+        <package name="com.hupu.games"/>
+        <package name="air.tv.douyu.android"/>
+        <package name="com.twitter.android"/>
+        <package name="com.ss.android.article.lite"/>
+        <package name="com.sup.android.superb"/>
+        <package name="cn.xiaochuankeji.tieba"/>
+        <package name="com.cubic.autohome"/>
+        <package name="com.tencent.news"/>
+        <package name="com.videogo"/>
+        <package name="com.gotokeep.keep"/>
+        <package name="com.snapchat.android"/>
+        <package name="com.ss.android.ugc.trill"/>
+        <package name="com.zhiliaoapp.musically.go"/>
+        <package name="in.mohalla.video"/>
+        <package name="tv.danmaku.bili"/>
+        <package name="com.smartviser.viserneo"/>
+    </group>
+
+    <group type="lowPowerLongVideo">
+        <package name="com.vanced.android.youtube"/>
+        <package name="com.google.android.apps.youtube.kids"/>
+    </group>
+
+    <group type="lowPowerGame">
+        <package name="com.tencent.tmgp.sgame"/>
+        <package name="com.tencent.tmgp.speedmobile"/>
+    </group>
+
+    <group type="lowPowerSva">
+        <package name="com.autonavi.minimap"/>
+        <package name="com.baidu.BaiduMap"/>
+        <package name="com.tencent.map"/>
+        <package name="com.google.android.apps.maps"/>
+    </group>
+</packages>

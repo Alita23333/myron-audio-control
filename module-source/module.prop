@@ -1,0 +1,6 @@
+id=myron_audio_control
+name=Myron Audio Control
+version=0.2.0
+versionCode=4
+author=Myron audio project
+description=解除名单音量衰减，自选原厂、统一默认或逐应用音效。默认覆盖全部可注入应用，保存后重启；仅适配已审计 Myron 固件。
