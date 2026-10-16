@@ -5,8 +5,9 @@ const mock=`let config={version:1,volumeUnity:true,effectMode:'stock',appScenes:
 const active=structuredClone(config);
 export async function exec(command){
  await new Promise(resolve=>setTimeout(resolve,150));
- const match=command.match(/^\\/data\\/adb\\/modules\\/myron_audio_control\\/bin\\/audioctl (status|apply)(?: ([A-Za-z0-9+/=]+))?$/);
+ const match=command.match(/^\\/data\\/adb\\/modules\\/myron_audio_control\\/bin\\/audioctl (status|apply|apps)(?: ([A-Za-z0-9+/=]+))?$/);
  if(!match)return {errno:1,stderr:'unexpected command',stdout:''};
+ if(match[1]==='apps')return {errno:0,stderr:'',stdout:JSON.stringify({ok:true,userId:0,apps:[{packageName:'tv.danmaku.bili',label:'哔哩哔哩',system:false},{packageName:'com.maxmpz.audioplayer',label:'Poweramp',system:false},{packageName:'com.android.settings',label:'设置',system:true},{packageName:'org.example.safe',label:'<img src=x onerror=alert(1)>',system:false}]})};
  if(match[1]==='apply'){config=JSON.parse(atob(match[2]));return {errno:0,stderr:'',stdout:JSON.stringify({ok:true,rebootRequired:true})};}
  return {errno:0,stderr:'',stdout:JSON.stringify({ok:true,active,pending:config,activeMeta:{scope:'all'},disabled:false,bootReady:true,rebootRequired:JSON.stringify(active)!==JSON.stringify(config),bootLog:'UI preview only — not device verification',nativeReadLog:''})};
 }`;
@@ -23,7 +24,7 @@ http.createServer((req,res)=>{
  const files={'/':'index.html','/index.html':'index.html','/app.js':'app.js','/style.css':'style.css'};
  if(!files[name]){res.writeHead(404);res.end();return;}
  let contents=fs.readFileSync(path.join(root,files[name]),'utf8');
- if(fixture&&files[name]==='index.html')contents=contents.replace('src="app.js"',`src="app.js?fixture=${fixture}"`);
+ if(fixture&&files[name]==='index.html')contents=contents.replace(/src="app.js[^\"]*"/,`src="app.js?fixture=${fixture}"`);
  if(fixture&&files[name]==='app.js')contents=contents.replace("'./ksu.js'",`'./ksu.js?fixture=${fixture}'`);
  res.setHeader('Content-Type',name.endsWith('.css')?'text/css':name.endsWith('.js')?'text/javascript':'text/html; charset=utf-8');res.end(contents);
 }).listen(8765,'127.0.0.1',()=>console.log('UI-only preview: http://127.0.0.1:8765'));

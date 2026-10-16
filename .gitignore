@@ -2,6 +2,7 @@
 /dist/
 /module-source/bin/
 /module-source/zygisk/
+/module-source/lib/
 /module-source/runtime/
 *.log
 *.apk

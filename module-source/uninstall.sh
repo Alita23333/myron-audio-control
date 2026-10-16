@@ -1,3 +1,5 @@
 #!/system/bin/sh
-# No writes to ODM and no runtime unmount. Full reboot removes process hooks/mounts.
+# Restore only our owned bass coefficient. Full reboot removes hooks/mounts.
+MODDIR=${0%/*}
+"$MODDIR/bin/bassctl" restore || true
 exit 0

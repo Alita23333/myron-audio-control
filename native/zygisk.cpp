@@ -34,16 +34,7 @@ static void companion(int socket){
         if(path.rfind(base+"/runtime/gen-",0)!=0||path.substr((base+"/runtime/gen-").size()).find('/')!=std::string::npos)throw std::runtime_error("bad active path");
         auto config=Json::parse(readFile(path+"/config.json")),meta=Json::parse(readFile(path+"/meta.json"));std::string xml=readFile(path+"/audio_lowpower_app_list.xml");
         if(meta["xmlHash"]!=digest(xml))throw std::runtime_error("snapshot hash mismatch");
-        // Audited Next 1.5.0/843: 0=disabled, 1=enforced, 2=unmount only.
-        // Unknown versions/policies fail closed. Never write Next settings.
-        bool unmountOnly=false;
-        try{
-            const std::string next="/data/adb/modules/zygisksu";
-            std::string properties="\n"+readFile(next+"/module.prop")+"\n";
-            unmountOnly=!exists(next+"/disable")&&!exists(next+"/remove")
-                &&properties.find("\nversionCode=843\n")!=std::string::npos
-                &&readFile("/data/adb/zygisksu/denylist_enforce")=="2";
-        }catch(...){unmountOnly=false;}
+        bool unmountOnly=unmountOnlyPolicy();
         Json reply={{"ok",true},{"volumeUnity",config["volumeUnity"]},{"scope",meta["scope"]},{"xml",xml},{"xmlHash",meta["xmlHash"]},{"allowUnmountOnly",unmountOnly}};std::string message=reply.dump();uint32_t size=message.size();
         if(size>262144)return;transfer(socket,&size,sizeof size,true);transfer(socket,message.data(),size,true);
     }catch(...){uint32_t size=0;transfer(socket,&size,sizeof size,true);}
@@ -61,24 +52,24 @@ public:
             if(processName=="tv.danmaku.bili"||processName=="com.maxmpz.audioplayer")__android_log_print(ANDROID_LOG_INFO,"MyronAudioControl","not_covered process=%s uid=%d flags=%u reason=zygisk_exclusion_or_system_uid",processName.c_str(),args->uid,api->getFlags());
             api->setOption(zygisk::DLCLOSE_MODULE_LIBRARY);return;
         }
-        int fd=api->connectCompanion();if(fd<0){api->setOption(zygisk::DLCLOSE_MODULE_LIBRARY);return;}
+        int fd=api->connectCompanion();if(fd<0){__android_log_print(ANDROID_LOG_WARN,"MyronAudioControl","not_covered process=%s pid=%d reason=companion_unavailable",processName.c_str(),getpid());api->setOption(zygisk::DLCLOSE_MODULE_LIBRARY);return;}
         timeval timeout{2,0};setsockopt(fd,SOL_SOCKET,SO_RCVTIMEO,&timeout,sizeof timeout);uint32_t size=0;
         bool success=transfer(fd,&size,sizeof size,false)&&size>0&&size<=262144;std::string message;if(success){message.resize(size);success=transfer(fd,message.data(),size,false);}close(fd);
         try{
             if(!success)throw std::runtime_error("snapshot unavailable");auto data=Json::parse(message);if(!data.value("ok",false)||!data.value("volumeUnity",false))throw std::runtime_error("normalization disabled");
-            if(onDenylist&&!data.value("allowUnmountOnly",false))throw std::runtime_error("denylist policy is not audited unmount-only; original behavior retained");
+            if(onDenylist&&!data.value("allowUnmountOnly",false))throw std::runtime_error("denylist policy is enforced or unrecognized; original behavior retained");
             auto package=processName.substr(0,processName.find(':'));std::string scope=data.at("scope");
             if(scope=="test"&&package!="tv.danmaku.bili"&&package!="com.maxmpz.audioplayer"&&package!="com.smartviser.viserneo")throw std::runtime_error("outside test scope");
             if(scope!="test"&&scope!="all")throw std::runtime_error("invalid scope");xmlSnapshot=data.at("xml");xmlHash=data.at("xmlHash");if(digest(xmlSnapshot)!=xmlHash)throw std::runtime_error("bad snapshot digest");enabled=true;
             if(onDenylist)__android_log_print(ANDROID_LOG_INFO,"MyronAudioControl","policy_unmount_only process=%s; native read allowed, visible mounts not restored",processName.c_str());
         }catch(const std::exception& e){
-            if(processName=="tv.danmaku.bili"||processName=="com.maxmpz.audioplayer")__android_log_print(ANDROID_LOG_INFO,"MyronAudioControl","not_covered process=%s reason=%s",processName.c_str(),e.what());
+            __android_log_print(ANDROID_LOG_INFO,"MyronAudioControl","not_covered process=%s pid=%d reason=%s",processName.c_str(),getpid(),e.what());
             xmlSnapshot.clear();api->setOption(zygisk::DLCLOSE_MODULE_LIBRARY);
         }
     }
     void postAppSpecialize(const zygisk::AppSpecializeArgs*)override{
         if(!enabled)return;
-        FILE* maps=fopen("/proc/self/maps","r");if(!maps){xmlSnapshot.clear();return;}char line[2048];bool found=false;
+        FILE* maps=fopen("/proc/self/maps","r");if(!maps){xmlSnapshot.clear();__android_log_print(ANDROID_LOG_WARN,"MyronAudioControl","hook_failed process=%s pid=%d reason=maps_unavailable",processName.c_str(),getpid());return;}char line[2048];bool found=false;
         while(fgets(line,sizeof line,maps)){
             unsigned majorId,minorId;unsigned long inode;char path[1024]{};
             if(sscanf(line,"%*s %*s %*s %x:%x %lu %1023s",&majorId,&minorId,&inode,path)==4&&strstr(path,"/libtinyxml2.so")){

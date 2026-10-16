@@ -13,3 +13,6 @@ sleep 5
         done
     done
 } >> "$MODDIR/boot-status.log" 2>&1
+# Separate from file-mount verification. No late bind mounts are attempted.
+# Stock bass selection exits immediately; enabled selection has guarded ownership.
+exec "$MODDIR/bin/bassctl" run >> "$MODDIR/runtime/bass-service.log" 2>&1

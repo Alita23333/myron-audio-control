@@ -20,5 +20,18 @@ inline std::string digest(const std::string& s) { return picosha2::hash256_hex_s
 inline bool exists(const std::string& p) { struct stat s{}; return stat(p.c_str(),&s)==0; }
 inline const char* LOW_PATH="/odm/etc/audio/audio_lowpower_app_list.xml";
 inline const char* EFFECT_PATH="/odm/etc/audio/audio_effects_config.json";
-inline const char* LOW_STOCK_HASH="352c981839b5619b5b61b28c6ca1bf8ca59fe8972c67510757f218b5cc7b706d";
-inline const char* EFFECT_STOCK_HASH="cd873f82c5d5f8f339bb2455c63c7c37e64fbb24959b912f4f5c28ad06c8b25b";
+inline std::string trim(std::string s) {
+    auto first=s.find_first_not_of(" \t\r\n\0",0,5);
+    if(first==std::string::npos)return {};
+    auto last=s.find_last_not_of(" \t\r\n\0",std::string::npos,5);
+    return s.substr(first,last-first+1);
+}
+inline bool unmountOnlyPolicy() {
+    // Capability/policy check, deliberately independent of provider version.
+    // An enforced or unrecognized policy never authorizes a denylisted hook.
+    try {
+        const std::string next="/data/adb/modules/zygisksu";
+        if(!exists(next)||exists(next+"/disable")||exists(next+"/remove"))return false;
+        return trim(readFile("/data/adb/zygisksu/denylist_enforce",32))=="2";
+    }catch(...){return false;}
+}

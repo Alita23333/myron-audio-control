@@ -11,11 +11,19 @@
 <label class="mode-card"><input type="radio" name="mode" value="default"><span class="radio-mark" aria-hidden="true"></span><span><strong>统一默认音效</strong><small>不再按应用名单分配场景，使用默认音效。</small></span></label>
 <label class="mode-card"><input type="radio" name="mode" value="per-app"><span class="radio-mark" aria-hidden="true"></span><span><strong>为应用单独设置</strong><small>以原厂设置为基础，只调整你指定的应用。</small></span></label>
 </fieldset>
-<div id="perApp" hidden><div class="editor-heading"><h3>应用规则</h3><span id="ruleCount" class="hint">0 个应用</span></div><p class="hint">填写应用包名，而不是显示名称。未添加的应用沿用原厂设置。</p><div id="rows"></div><button id="add" type="button" class="secondary full">＋ 添加应用规则</button><p class="hint">切换到其他模式时，规则会保留，但不会应用。</p></div></section>
+<div id="perApp" hidden><div class="editor-heading"><h3>应用规则</h3><span id="ruleCount" class="hint">0 个应用</span></div><p class="hint">从手机应用列表选择，无需填写包名。未添加的应用沿用原厂设置。</p><div id="rows"></div><button id="add" type="button" class="secondary full">＋ 从应用列表添加</button>
+<div id="appPicker" class="app-picker" hidden aria-label="选择已安装应用"><div class="section-heading"><h3>选择应用</h3><button id="closeApps" type="button" class="remove">收起</button></div><input id="appSearch" type="text" placeholder="搜索应用名称或包名" aria-label="搜索已安装应用" autocomplete="off"><div class="catalog-actions"><label class="hint"><input id="showSystem" type="checkbox"> 显示系统应用</label><button id="reloadApps" type="button" class="remove">刷新列表</button></div><p id="appListStatus" class="hint" role="status" aria-live="polite">仅读取本机应用，不会上传列表。</p><div id="appResults" class="app-results"></div></div>
+<p class="hint">切换到其他模式时，规则会保留，但不会应用。已有但未安装的应用规则仍保留，可自行删除。</p></div></section>
+<section><div class="section-heading"><h2>独立低音</h2><span class="tag">仅内置扬声器</span></div><p class="section-intro">单独增强背部低音单元，不调整两个全频单元。可与上面的音量和音效分别设置。</p><fieldset class="mode-list"><legend class="sr-only">选择低音增强档位</legend>
+<label class="mode-card"><input type="radio" name="bass" value="0" checked><span class="radio-mark" aria-hidden="true"></span><span><strong>原厂 <em>默认</em></strong><small>保留原厂低音强度，不运行增益控制。</small></span></label>
+<label class="mode-card"><input type="radio" name="bass" value="1"><span class="radio-mark" aria-hidden="true"></span><span><strong>轻度增强</strong><small>减少 1 格原厂衰减；已完成中低音量短时试听。</small></span></label>
+<label class="mode-card"><input type="radio" name="bass" value="2"><span class="radio-mark" aria-hidden="true"></span><span><strong>中度增强 <em>实验</em></strong><small>减少 2 格衰减；尚未完成听感和长时测试。</small></span></label>
+<label class="mode-card"><input type="radio" name="bass" value="3"><span class="radio-mark" aria-hidden="true"></span><span><strong>较强增强 <em>实验</em></strong><small>减少 3 格衰减；建议先从较低系统音量试听。</small></span></label>
+</fieldset><p class="note">档位不是 dB。只在已识别的普通外放路径应用；进入通话、其他路由或系统接管时退出。未关闭保护，但增强仍可能增加失真和发热。</p><p id="bassStatus" class="hint" role="status">正在读取低音状态…</p></section>
 <div class="save-panel"><p id="draft" class="hint" role="status">尚未修改设置</p><button id="save" type="submit" disabled>保存设置</button><p class="hint">保存后需完整重启手机才能生效，不会自动重启。</p></div>
 </form>
 <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
-<details class="help"><summary>使用须知与恢复方法</summary><div class="details-body"><p>默认覆盖全部可注入应用。禁止注入的应用不会被强制注入；并非每个应用或输出路径都已验证。</p><p>已验证普通扬声器 PCM 播放。蓝牙、USB、硬件卸载解码和直通输出等路径可能不生效。</p><p>保存设置后请重启。禁用或卸载本模块后也请重启，原厂文件会自然恢复。</p><p>仅适配设备代号 myron，并核对原厂音频文件。系统更新后应按仓库说明重新测试；文件不兼容时模块会拒绝加载。</p><p>场景名称表示配置选择，不表示已经测得实际 Dolby 编号；原厂分段调音保持不变。</p></div></details>
+<details class="help"><summary>使用须知与恢复方法</summary><div class="details-body"><p>默认覆盖全部可注入应用。禁止注入的应用不会被强制注入；并非每个应用或输出路径都已验证。</p><p>已验证普通扬声器 PCM 播放。蓝牙、USB、硬件卸载解码和直通输出等路径可能不生效。</p><p>保存设置后请重启。禁用或卸载本模块后也请重启，原厂文件会自然恢复。</p><p>适用设备代号 myron，无系统或 Zygisk 版本白名单。系统更新后自动保存并检查当前原厂音频配置，沿用兼容的设置；配置结构改变或发现其他覆盖时停止加载，并保留诊断信息。</p><p>场景名称表示配置选择，不表示已经测得实际 Dolby 编号；原厂分段调音保持不变。</p></div></details>
 <details id="diagnostics"><summary>高级诊断</summary><div class="details-body"><p class="hint">供排查问题使用。文件视图、读取替换日志和实际播放验证是不同证据。</p><button id="refresh" type="button" class="secondary">刷新状态</button><p class="hint">刷新只更新状态，不会覆盖你未保存的修改。</p><pre id="evidence">等待读取…</pre></div></details>
-<footer>Myron 音频控制 · <span>0.2.1</span></footer>
-</main><script type="module" src="app.js"></script></body></html>
+<footer>Myron 音频控制 · <span>0.4.1</span></footer>
+</main><script type="module" src="app.js?v=0.4.1"></script></body></html>
